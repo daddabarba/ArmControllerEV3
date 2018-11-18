@@ -1,4 +1,4 @@
-#include "MotorController.hpp"
+#include "Class/MotorController.hpp"
 
 int main()
 {
