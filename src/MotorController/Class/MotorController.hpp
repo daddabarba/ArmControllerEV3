@@ -83,6 +83,7 @@ namespace ev3TachoController{
 
 			void stop();
 
+			void goTo();
 			void goTo(int position);
 			void goTo(int position, int speed);
 

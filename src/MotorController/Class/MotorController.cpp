@@ -49,8 +49,13 @@ void ev3TachoController::MotorController::stop(){
 	this->command_i << STOP;
 }
 
-void ev3TachoController::MotorController::goTo(int position){
+void ev3TachoController::MotorController::goTo(){
 	this->command_i << RUN_TO_ABS;
+}
+
+void ev3TachoController::MotorController::goTo(int position){
+	this->setPosition(position);
+	this->goTo();
 }
 
 void ev3TachoController::MotorController::goTo(int position, int speed){
