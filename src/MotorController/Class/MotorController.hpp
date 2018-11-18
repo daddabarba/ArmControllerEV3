@@ -34,12 +34,13 @@ namespace ev3TachoController{
 
 	//Commands
 	const char *
-			RUN-FOREVER		= "run-forever",
-			RUN-TO-ABS-POS	= "run-to-abs-pos",
-			RUN-TO-REL-POS	= "run-to-rel-pos",
+			RUN				= "run-forever",
+			RUN-TO-ABS		= "run-to-abs-pos",
+			RUN-TO-REL		= "run-to-rel-pos",
 
 			STOP-COAST		= "coast",
-			STOP-HOLD		= "hold";
+			STOP-HOLD		= "hold",
+			STOP 			= "stop";
 
 	class MotorController{
 
@@ -62,6 +63,26 @@ namespace ev3TachoController{
 
 			//Destructor
 			~MotorController();
+
+			//Controller functions
+			void run();
+			void run(int speed);
+
+			void stop();
+
+			void goTo(int position);
+			void goTo(int position, int speed);
+
+			void setSpeed(int speed);
+			void setPosition(int position);
+
+			void setStop(const char *action);
+			void setHold();
+			void setCoast();
+
+			int getSpeed();
+			int getPosition();
+			const char *getAddress();
 
 		private:
 
