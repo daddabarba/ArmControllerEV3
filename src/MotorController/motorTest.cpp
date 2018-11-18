@@ -2,7 +2,7 @@
 
 int main()
 {
-	MotorController motor(0);
+	ev3TachoController::MotorController motor(0);
 
 	motor.goTo(180, 200);
 
