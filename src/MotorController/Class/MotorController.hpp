@@ -15,8 +15,8 @@ namespace ev3TachoController{
 	const std::string 
 			TACHO_PATH 		= "/sys/class/tacho-motor/motor",
 
-			SPEED_I_FILE 	= "/speed_sd",
-			POSITION_I_FILE	= "/position_sd",
+			SPEED_I_FILE 	= "/speed_sp",
+			POSITION_I_FILE	= "/position_sp",
 			STOP_I_FILE		= "/stop_action",
 			COMMAND_FILE 	= "/command",
 
@@ -39,37 +39,13 @@ namespace ev3TachoController{
 
 	int findMotor(std::string port);
 
-	/*class Motor_path
-	{
-		
-		public:
-			Motor_path(int id){
-				path << TACHO_PATH << id;
-			}
-
-			std::string getPath(){
-				return path.str();
-			}
-
-		private:
-			std::stringstream path;
-	};*/
-
 	class MotorController{
 
 		public:
 
 			//Constructors
-			MotorController(std::string port) : MotorController(findMotor(port)){}
-			MotorController(int id) : 
-							command_i	(TACHO_PATH + std::to_string(id) + COMMAND_FILE, std::fstream::out),
-							speed_i 	(TACHO_PATH + std::to_string(id) + SPEED_I_FILE, std::fstream::out),
-							position_i 	(TACHO_PATH + std::to_string(id) + POSITION_I_FILE, std::fstream::out),
-							stop_action (TACHO_PATH + std::to_string(id) + STOP_I_FILE, std::fstream::out),
-							address 	(TACHO_PATH + std::to_string(id) + ADDRESS_FILE, std::fstream::in),
-							speed_o 	(TACHO_PATH + std::to_string(id) + SPEED_O_FILE, std::fstream::in),
-							position_o 	(TACHO_PATH + std::to_string(id) + POSITION_O_FILE, std::fstream::in)
-							{}
+			MotorController(std::string port);
+			MotorController(int id);
 
 			MotorController operator= (MotorController& mc);
 			MotorController operator= (MotorController mc);
@@ -86,6 +62,10 @@ namespace ev3TachoController{
 			void goTo();
 			void goTo(int position);
 			void goTo(int position, int speed);
+
+			void makeStep();
+			void makeStep(int size);
+			void makeStep(int size, int speed);
 
 			void setSpeed(int speed);
 			void setPosition(int position);

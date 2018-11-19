@@ -5,6 +5,20 @@
 
 using namespace ev3TachoController;
 
+ev3TachoController::MotorController::MotorController(std::string port) : 
+	MotorController(findMotor(port))
+	{}
+
+ev3TachoController::MotorController::MotorController(int id) : 
+	command_i	(TACHO_PATH + std::to_string(id) + COMMAND_FILE, std::fstream::out),
+	speed_i 	(TACHO_PATH + std::to_string(id) + SPEED_I_FILE, std::fstream::out),
+	position_i 	(TACHO_PATH + std::to_string(id) + POSITION_I_FILE, std::fstream::out),
+	stop_action (TACHO_PATH + std::to_string(id) + STOP_I_FILE, std::fstream::out),
+	address 	(TACHO_PATH + std::to_string(id) + ADDRESS_FILE, std::fstream::in),
+	speed_o 	(TACHO_PATH + std::to_string(id) + SPEED_O_FILE, std::fstream::in),
+	position_o 	(TACHO_PATH + std::to_string(id) + POSITION_O_FILE, std::fstream::in)
+	{}
+
 ev3TachoController::MotorController::~MotorController(){
 
 	this->command_i.close();
@@ -61,6 +75,20 @@ void ev3TachoController::MotorController::goTo(int position){
 void ev3TachoController::MotorController::goTo(int position, int speed){
 	this->setSpeed(speed);
 	this->goTo(position);
+}
+
+void ev3TachoController::MotorController::makeStep(){
+	this->command_i << RUN_TO_REL;
+}
+
+void ev3TachoController::MotorController::makeStep(int size){
+	this->setPosition(size);
+	this->makeStep();
+}
+
+void ev3TachoController::MotorController::makeStep(int size, int speed){
+	this->setSpeed(speed);
+	this->makeStep(size);
 }
 
 void ev3TachoController::MotorController::setSpeed(int speed){
